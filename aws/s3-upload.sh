@@ -3,7 +3,7 @@
 set -e
 
 # Requirements:
-# 1. Have Docker installed. If you're using ECR, I will assume that's done!
+# 1. Have Docker or aws CLI installed.
 # 
 # 2. Set environment variables:
 # AWS_ACCESS_KEY_ID - IAM user account key id
@@ -17,11 +17,18 @@ set -e
 
 REGION=${REGION:-us-east-1}
 
-docker run --rm \
-    -e KEY=$AWS_ACCESS_KEY_ID \
-    -e SECRET=$AWS_SECRET_ACCESS_KEY \
-    -e REGION=$REGION \
-    -e BUCKET=$BUCKET_NAME \
-    -e BUCKET_PATH=$BUCKET_PATH \
-    -v $(pwd)/$UPLOAD_PATH:/data:ro \
-    futurevision/aws-s3-sync now
+if command -v docker; then
+    docker run --rm \
+        -e KEY=$AWS_ACCESS_KEY_ID \
+        -e SECRET=$AWS_SECRET_ACCESS_KEY \
+        -e REGION=$REGION \
+        -e BUCKET=$BUCKET_NAME \
+        -e BUCKET_PATH=$BUCKET_PATH \
+        -v $(pwd)/$UPLOAD_PATH:/data:ro \
+        futurevision/aws-s3-sync now
+elif command -v aws; then
+    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY REGION=$REGION aws s3 sync $(pwd)/$UPLOAD_PATH s3://$BUCKET_NAME$BUCKET_PATH
+else 
+    echo "Neither docker or aws commands exist. Cannot run."
+    exit 1
+fi 
