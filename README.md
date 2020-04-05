@@ -5,7 +5,13 @@ Re-useable, version controlled, collection of scripts to setup a CI server quick
 Each of the scripts in this repo can be executed by: 
 
 ```bash
-curl -o- https://raw.githubusercontent.com/levibostian/ci-bootstrap/path/to/file.sh | bash 
+curl https://raw.githubusercontent.com/levibostian/ci-bootstrap/path/to/file.sh | bash 
+
+# If you need to pass in args to the command:
+curl https://raw.githubusercontent.com/levibostian/ci-bootstrap/path/to/file.sh | bash -s arg
+
+# If you want to pass in environment variable values:
+curl https://raw.githubusercontent.com/levibostian/ci-bootstrap/path/to/file.sh | ENV_VAR=value bash 
 ```
 
 *Note: It's up to you to use a version-controlled commit hash for the path to the script, or, use a branch such as `master` that is always up-to-date.*
