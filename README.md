@@ -18,6 +18,14 @@ curl https://raw.githubusercontent.com/levibostian/ci-bootstrap/path/to/file.sh 
 
 *Note: Scripts inside of the `deprecated` folder are not being updated and may be deleted at some point. They exist here for reference and legacy code, only.*
 
+*Note: This project may be unmaintained at some point in the future to switch over to using [shared config files](https://docs.travis-ci.com/user/build-config-imports/). The scripts may be archived for read-only purposes.*
+
+# Assumptions
+
+Scripts in this repo are assumed to be executed in a certain environment. However, they may work in others. 
+
+* Ubuntu or macOS running on Travis-CI
+
 # Design of the scripts
 
 Here are some of the design decisions made while creating this repo. 
